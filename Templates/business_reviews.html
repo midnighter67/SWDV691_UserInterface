@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="row col-6 mx-auto mb-5">
+    <h2 style="text-align: center">Your Reviews</h2>
+</div>
+{% for review, consumer, reply in data %}
+<div class="row text-center">
+    <div class="container-bordered border border-dark rounded-2 mb-5 text-center col-lg-5 mx-auto">
+        
+        <div class="my-3">
+            <h7>Left by {{consumer}}</h7>
+        </div>
+        
+        <div class="mb-3">
+            {% if review.rating == 0.5 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf089;</i>
+            {% elif review.rating == 1 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;</i>
+            {% elif review.rating == 1.5 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf089;</i>
+            {% elif review.rating == 2 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;</i>
+            {% elif review.rating == 2.5 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;&#xf089;</i>
+            {% elif review.rating == 3 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;&#xf005;</i>
+            {% elif review.rating == 3.5 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;&#xf005;&#xf089;</i>
+            {% elif review.rating == 4 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;&#xf005;&#xf005;</i>
+            {% elif review.rating == 4.5 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;&#xf005;&#xf005;&#xf089;</i>
+            {% elif review.rating == 5 %}
+                <i style='font-size:24px' class='fas col-3 pt-3'>&#xf005;&#xf005;&#xf005;&#xf005;&#xf005;</i>
+            {% endif %} 
+        </div>
+        <div class="mb-3">
+            <h3>{{ review.title }}</h3>
+        </div>
+        <div class="col-5 mx-auto mb-4">
+            <p>{{ review.text }}</p>
+        </div>
+        {% if reply != 0 %}
+            <div class="mb-3">
+                <h4>You replied:</h4>
+            </div>
+            <div class="col-5 mx-auto mb-4">
+                <p>{{ reply.text }}</p>
+            </div>
+        {% endif %}
+        {% if consumer != "deleted account" %}
+            {% if reply != 0 %}
+                <div class="mb-3">
+                    <p><small><a class="page-links"  style="text-decoration: none;" href="{% url 'reply' review.id %}">edit reply</a></small></p>
+                </div>
+            {% else %}
+                <div class="mb-3">
+                    <p><small><a class="page-links"  style="text-decoration: none;" href="{% url 'reply' review.id %}">reply</a></small></p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+        
+        
+</div>
+
+{% endfor %}
+            
+
+
+
+{% endblock %}
